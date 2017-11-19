@@ -23,7 +23,6 @@ class XMLEntityTest extends GraphQLFileTestBase {
   public static $modules = [
     'node',
     'graphql_core',
-    'graphql_content',
     'graphql_xml',
   ];
 
