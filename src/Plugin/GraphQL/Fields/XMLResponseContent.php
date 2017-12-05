@@ -13,7 +13,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   secure = true,
  *   name = "xml",
  *   type = "XMLElement",
- *   types = {"InternalResponse", "ExternalResponse"}
+ *   parents = {"InternalResponse", "ExternalResponse"}
  * )
  */
 class XMLResponseContent extends \Drupal\graphql_core\Plugin\GraphQL\Fields\Routing\ResponseContent {

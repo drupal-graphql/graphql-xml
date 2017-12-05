@@ -16,7 +16,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   name = "xpathToEntity",
  *   secure = true,
  *   type = "Entity",
- *   types = {"XMLElement"},
+ *   parents = {"XMLElement"},
  *   multi = true,
  *   arguments = {
  *     "type" = "String",

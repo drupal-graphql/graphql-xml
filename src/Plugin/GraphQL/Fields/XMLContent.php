@@ -13,7 +13,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   secure = true,
  *   type = "String",
  *   name = "content",
- *   types = { "XMLElement" }
+ *   parents = { "XMLElement" }
  * )
  */
 class XMLContent extends FieldPluginBase {

@@ -13,7 +13,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   name = "xpathToUrl",
  *   secure = true,
  *   type = "Url",
- *   types = {"XMLElement"},
+ *   parents = {"XMLElement"},
  *   multi = true,
  *   arguments = {
  *     "query" = "String"

@@ -17,7 +17,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *     "query" = "String"
  *   },
  *   name = "xpath",
- *   types = { "XMLElement" }
+ *   parents = { "XMLElement" }
  * )
  */
 class XMLXPath extends FieldPluginBase {

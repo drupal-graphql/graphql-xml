@@ -14,7 +14,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   type = "String",
  *   name = "attribute",
  *   arguments = { "name": "String" },
- *   types = { "XMLElement" }
+ *   parents = { "XMLElement" }
  * )
  */
 class XMLAttribute extends FieldPluginBase {

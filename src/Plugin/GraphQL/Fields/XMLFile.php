@@ -14,7 +14,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   name = "xml",
  *   secure = true,
  *   type = "XMLElement",
- *   types = {"File"},
+ *   parents = {"File"},
  * )
  */
 class XMLFile extends FieldPluginBase {
