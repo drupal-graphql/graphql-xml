@@ -5,8 +5,9 @@ namespace Drupal\graphql_xml\Plugin\GraphQL\Fields;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
+use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Youshido\GraphQL\Execution\ResolveInfo;
 
 /**
  * Extract entities from xpath values.
@@ -67,8 +68,8 @@ class XPathToEntity extends XMLXPath implements ContainerFactoryPluginInterface 
   /**
    * {@inheritdoc}
    */
-  public function resolveValues($value, array $args, ResolveInfo $info) {
-    foreach (parent::resolveValues($value, $args, $info) as $item) {
+  public function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
+    foreach (parent::resolveValues($value, $args, $context, $info) as $item) {
       /** @var \DOMElement $item */
       if ($entity = $this->entityRepository->loadEntityByUuid($args['type'], $item->textContent)) {
         if ($entity->access('view')) {

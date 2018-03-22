@@ -1,12 +1,16 @@
 query {
   route(path: "http://graphql.drupal/xml") {
-    request {
-      xml {
-        ... on XMLElement {
-          url:xpathToUrl(query:"a/@href") {
-            request {
-              xml {
-                content
+    ... on ExternalUrl {
+      request {
+        xml {
+          ... on XMLElement {
+            url:xpathToUrl(query:"a/@href") {
+              ... on ExternalUrl {
+                request {
+                  xml {
+                    content
+                  }
+                }
               }
             }
           }

@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\graphql_xml\Kernel;
 
-use Drupal\Tests\graphql\Kernel\GraphQLFileTestBase;
+use Drupal\Tests\graphql_core\Kernel\GraphQLCoreTestBase;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 
@@ -11,15 +11,26 @@ use GuzzleHttp\Psr7\Response;
  *
  * @group graphql_xml
  */
-class XMLUrlTest extends GraphQLFileTestBase {
+class XMLUrlTest extends GraphQLCoreTestBase {
 
   /**
    * {@inheritdoc}
    */
   public static $modules = [
-    'graphql_core',
     'graphql_xml',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defaultCacheTags() {
+    return [
+      'entity_field_info',
+      'entity_types',
+      'graphql',
+      'graphql_response',
+    ];
+  }
 
   /**
    * Test xml response.
@@ -33,15 +44,19 @@ class XMLUrlTest extends GraphQLFileTestBase {
 
     $this->container->set('http_client', $httpClient->reveal());
 
-    $result = $this->executeQueryFile('url.gql', [], TRUE, TRUE);
+    $query = $this->getQueryFromFile('url.gql');
 
-    $this->assertEquals([
-      'xml' => [
-        'xpath' => [
-          ['content' => 'Test'],
+    $this->assertResults($query, [], [
+      'route' => [
+        'request' => [
+          'xml' => [
+            'xpath' => [
+              ['content' => 'Test'],
+            ],
+          ],
         ],
       ],
-    ], $result['data']['route']['request']);
+    ], $this->defaultCacheMetaData());
   }
 
   /**
@@ -60,21 +75,25 @@ class XMLUrlTest extends GraphQLFileTestBase {
 
     $this->container->set('http_client', $httpClient->reveal());
 
-    $result = $this->executeQueryFile('nested_url.gql', [], TRUE, TRUE);
+    $query = $this->getQueryFromFile('nested_url.gql');
 
-    $this->assertEquals([
-      'xml' => [
-        'url' => [
-          [
-            'request' => [
-              'xml' => [
-                'content' => 'Subtest',
+    $this->assertResults($query, [], [
+      'route' => [
+        'request' => [
+          'xml' => [
+            'url' => [
+              [
+                'request' => [
+                  'xml' => [
+                    'content' => 'Subtest',
+                  ],
+                ],
               ],
             ],
           ],
         ],
       ],
-    ], $result['data']['route']['request']);
+    ], $this->defaultCacheMetaData());
   }
 
 }

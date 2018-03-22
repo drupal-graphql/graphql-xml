@@ -2,8 +2,9 @@
 
 namespace Drupal\graphql_xml\Plugin\GraphQL\Fields;
 
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql_core\Plugin\GraphQL\Fields\Routing\Route;
-use Youshido\GraphQL\Execution\ResolveInfo;
+use GraphQL\Type\Definition\ResolveInfo;
 
 /**
  * Extract Url objects from xpath values.
@@ -25,12 +26,12 @@ class XPathToUrl extends Route {
   /**
    * {@inheritdoc}
    */
-  public function resolveValues($value, array $args, ResolveInfo $info) {
+  public function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
     if ($value instanceof \DOMElement) {
       $xpath = new \DOMXPath($value->ownerDocument);
       foreach ($xpath->query($args['query'], $value) as $el) {
         /** @var $el \DOMElement */
-        $iterator = parent::resolveValues(NULL, ['path' => $el->textContent], $info);
+        $iterator = parent::resolveValues(NULL, ['path' => $el->textContent], $context, $info);
         $result = iterator_to_array($iterator);
         reset($result);
         foreach ($result as $row) {

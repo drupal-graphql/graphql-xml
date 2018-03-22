@@ -6,6 +6,7 @@ namespace Drupal\Tests\graphql_xml\Kernel;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Tests\graphql\Kernel\GraphQLFileTestBase;
+use Drupal\Tests\graphql_core\Kernel\GraphQLContentTestBase;
 use Drupal\user\Entity\Role;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
@@ -15,25 +16,22 @@ use GuzzleHttp\Psr7\Response;
  *
  * @group graphql_xml
  */
-class XMLEntityTest extends GraphQLFileTestBase {
+class XMLEntityTest extends GraphQLContentTestBase {
 
   /**
    * {@inheritdoc}
    */
   public static $modules = [
-    'node',
-    'graphql_core',
     'graphql_xml',
   ];
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
-    parent::setUp();
-    Role::load('anonymous')
-      ->grantPermission('access content')
-      ->save();
+  protected function defaultCacheContexts() {
+    return array_merge([
+      'user.node_grants:view',
+    ], parent::defaultCacheContexts());
   }
 
   /**
@@ -54,15 +52,19 @@ class XMLEntityTest extends GraphQLFileTestBase {
     ]));
     $this->container->set('entity.repository', $entityRepository->reveal());
 
-    $result = $this->executeQueryFile('entity.gql', [], TRUE, TRUE);
+    $query = $this->getQueryFromFile('entity.gql');
 
-    $this->assertEquals([
-      'xml' => [
-        'node' => [
-          ['uuid' => 'abc'],
+    $this->assertResults($query, [], [
+      'route' => [
+        'request' => [
+          'xml' => [
+            'node' => [
+              ['uuid' => 'abc'],
+            ],
+          ],
         ],
       ],
-    ], $result['data']['route']['request']);
+    ], $this->defaultCacheMetaData());
   }
 
 }
