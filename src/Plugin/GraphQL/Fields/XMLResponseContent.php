@@ -25,7 +25,8 @@ class XMLResponseContent extends ResponseContent {
   protected function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
     foreach (parent::resolveValues($value, $args, $context, $info) as $item) {
       $document = new \DOMDocument();
-      $document->loadXML($item);
+      libxml_use_internal_errors(TRUE);
+      $document->loadHTML($item);
       yield $document->documentElement;
     }
   }
