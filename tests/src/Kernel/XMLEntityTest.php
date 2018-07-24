@@ -26,15 +26,6 @@ class XMLEntityTest extends GraphQLContentTestBase {
   ];
 
   /**
-   * {@inheritdoc}
-   */
-  protected function defaultCacheContexts() {
-    return array_merge([
-      'user.node_grants:view',
-    ], parent::defaultCacheContexts());
-  }
-
-  /**
    * Test loading entities from json.
    */
   public function testXMLEntity() {
