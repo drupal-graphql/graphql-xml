@@ -25,10 +25,7 @@ class XMLUrlTest extends GraphQLCoreTestBase {
    */
   protected function defaultCacheTags() {
     return [
-      'entity_field_info',
-      'entity_types',
       'graphql',
-      'graphql_response',
     ];
   }
 
